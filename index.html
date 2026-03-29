@@ -63,6 +63,16 @@ body.dark .ck{background:#2a0d18;color:var(--a4);}
 body.dark .ai-tag{background:#1a1a3a;color:var(--accent);}
 body.dark [data-tip]::after{background:#22223a;color:var(--text);}
 body.dark .nav-i .tip{background:#22223a;}
+body.dark .sess-item:hover{background:#2a2a42;}
+body.dark .sess-item:hover .sess-name,
+body.dark .sess-item:hover .sess-meta{color:var(--text);}
+body.dark .mood-btn.sel{background:#2a2a52;border-color:var(--accent);}
+body.dark .pop-m.sel{background:#2a2a52;border-color:var(--accent);}
+body.dark .btn-o{background:var(--card);color:var(--accent);border-color:var(--accent);}
+body.dark .btn-o:hover{background:#22223a;}
+body.dark .toggle-s{background:#3a3a5a;}
+body.dark .set-lbl{color:var(--text);}
+body.dark .star{color:#e8e8f4;}
 
 /* ── SIDEBAR ── */
 .sidebar{width:72px;background:var(--sidebar);display:flex;flex-direction:column;align-items:center;padding:22px 0;position:fixed;height:100vh;z-index:100;}
@@ -392,6 +402,58 @@ body.dark .nav-i .tip{background:#22223a;}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fadeUp .35s both;}
+
+/* ── PAGES ── */
+.page{display:none;padding:22px 26px;animation:fadeIn .25s ease;}
+.page.active{display:block;}
+.page-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+.page-title-row h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;}
+.page-title-row p{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* ── SESSIONS PAGE ── */
+.sess-full-table{width:100%;border-collapse:collapse;}
+.sess-full-table th{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
+.sess-full-table td{padding:12px 14px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.sess-full-table tr:last-child td{border-bottom:none;}
+.sess-full-table tr:hover td{background:var(--chip);}
+.focus-bar-wrap{width:80px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:6px;}
+.focus-bar-fill{height:6px;border-radius:3px;background:var(--accent);}
+
+/* Calendar heatmap */
+.heatmap-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px;}
+.hm-cell{aspect-ratio:1;border-radius:4px;background:var(--border);transition:.2s;cursor:default;position:relative;}
+.hm-cell.hm-1{background:rgba(108,99,255,.25);}
+.hm-cell.hm-2{background:rgba(108,99,255,.50);}
+.hm-cell.hm-3{background:rgba(108,99,255,.75);}
+.hm-cell.hm-4{background:rgba(108,99,255,1);}
+.hm-day-label{font-size:9px;color:var(--muted);text-align:center;margin-bottom:4px;}
+.hm-month-labels{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:2px;}
+
+/* ── WELLNESS PAGE ── */
+.mood-timeline{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;}
+.mood-tl-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:11px;background:var(--chip);}
+.mood-tl-emoji{font-size:20px;flex-shrink:0;}
+.mood-tl-info{flex:1;}
+.mood-tl-date{font-size:12px;font-weight:600;}
+.mood-tl-time{font-size:11px;color:var(--muted);}
+.mood-tl-bar{width:60px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.mood-tl-fill{height:5px;border-radius:3px;}
+.mood-score-big{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:var(--accent);line-height:1;}
+.well-big-ring{position:relative;width:140px;height:140px;}
+.well-big-ring svg{transform:rotate(-90deg);}
+.well-big-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+
+/* ── ANALYTICS PAGE ── */
+.analytics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:18px;}
+.analytics-grid .card{margin:0;}
+.stat-big-card{text-align:center;padding:28px 20px;}
+.sbc-val{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;line-height:1;}
+.sbc-lbl{font-size:13px;color:var(--muted);margin-top:6px;}
+.sbc-trend{font-size:12px;font-weight:600;margin-top:4px;}
+.bar-chart-wrap{display:flex;align-items:flex-end;gap:6px;height:120px;margin-top:8px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-fill{width:100%;border-radius:5px 5px 0 0;background:var(--accent);min-height:4px;transition:height .4s;}
+.bar-lbl{font-size:9.5px;color:var(--muted);text-align:center;}
 </style>
 </head>
 <body>
@@ -399,10 +461,10 @@ body.dark .nav-i .tip{background:#22223a;}
 <!-- ══ SIDEBAR ══ -->
 <nav class="sidebar">
   <div class="s-logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div>
-  <div class="nav-i on"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span class="tip">Dashboard</span></div>
-  <div class="nav-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="tip">Sessions</span></div>
-  <div class="nav-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="tip">Wellness</span></div>
-  <div class="nav-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg><span class="tip">Analytics</span></div>
+  <div class="nav-i on" id="nav-dashboard" onclick="navTo('dashboard')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><span class="tip">Dashboard</span></div>
+  <div class="nav-i" id="nav-sessions" onclick="navTo('sessions')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg><span class="tip">Sessions</span></div>
+  <div class="nav-i" id="nav-wellness" onclick="navTo('wellness')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="tip">Wellness</span></div>
+  <div class="nav-i" id="nav-analytics" onclick="navTo('analytics')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg><span class="tip">Analytics</span></div>
   <div class="sb-sp"></div>
   <div class="nav-i" onclick="openSettings()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg><span class="tip">Settings</span></div>
 </nav>
@@ -420,6 +482,8 @@ body.dark .nav-i .tip{background:#22223a;}
     </div>
   </header>
 
+  <!-- ══ DASHBOARD PAGE ══ -->
+  <div class="page active" id="page-dashboard">
   <div class="content">
 
     <!-- HERO -->
@@ -589,10 +653,231 @@ body.dark .nav-i .tip{background:#22223a;}
       </div>
     </div>
 
-  </div>
-</div>
+  </div><!-- end .content -->
+  </div><!-- end #page-dashboard -->
 
-<!-- SESSION MODAL -->
+  <!-- ══ SESSIONS PAGE ══ -->
+  <div class="page" id="page-sessions">
+  <div class="content">
+    <div class="page-title-row">
+      <div><h1>Study Sessions</h1><p>Your complete session history with focus analytics</p></div>
+      <button class="btn btn-sm" onclick="openSessModal()">＋ Log Session</button>
+    </div>
+
+    <!-- Summary stat row -->
+    <div class="stat-row" style="margin-bottom:20px;">
+      <div class="sc p"><div class="sc-lbl"><span>Total Sessions</span><span class="sc-chip cp">All</span></div><div class="sc-val" id="sp-total" style="color:var(--accent)">0</div><div class="sc-sub" id="sp-totalsub">—</div></div>
+      <div class="sc g"><div class="sc-lbl"><span>Total Hours</span><span class="sc-chip cg">All</span></div><div class="sc-val" id="sp-hours" style="color:var(--a2)">0.0</div><div class="sc-sub" id="sp-hourssub">—</div></div>
+      <div class="sc a"><div class="sc-lbl"><span>Avg Focus</span><span class="sc-chip ca">⭐</span></div><div class="sc-val" id="sp-focus" style="color:var(--a3)">—</div><div class="sc-sub">Out of 5</div></div>
+      <div class="sc k"><div class="sc-lbl"><span>Top Subject</span><span class="sc-chip ck">Most</span></div><div class="sc-val" id="sp-subject" style="color:var(--a4);font-size:16px;padding-top:6px;">—</div><div class="sc-sub" id="sp-subjectsub">—</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:18px;margin-bottom:18px;">
+      <!-- Full session table -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div style="padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+          <span class="c-title">All Sessions</span>
+          <div style="display:flex;gap:6px;">
+            <input type="text" id="sessSearch" placeholder="🔍 Filter by subject…" oninput="renderFullTable()" style="padding:6px 11px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Sans';background:var(--chip);color:var(--text);outline:none;width:180px;">
+            <select id="sessSort" onchange="renderFullTable()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:'DM Sans';background:var(--chip);color:var(--text);outline:none;">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="longest">Longest first</option>
+              <option value="focus">Best focus</option>
+            </select>
+          </div>
+        </div>
+        <div style="overflow-y:auto;max-height:420px;">
+          <table class="sess-full-table" id="sessFullTable">
+            <thead><tr><th>Subject</th><th>Date</th><th>Duration</th><th>Focus</th><th>Notes</th></tr></thead>
+            <tbody id="sessFullBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;">No sessions yet</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Activity heatmap + donut -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card">
+          <div class="c-hdr"><span class="c-title">Activity Heatmap</span><span style="font-size:11px;color:var(--muted);">Last 28 days</span></div>
+          <div id="heatmapGrid" class="heatmap-grid"></div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:10px;font-size:10px;color:var(--muted);">
+            <span>Less</span>
+            <div style="width:10px;height:10px;border-radius:2px;background:var(--border);"></div>
+            <div style="width:10px;height:10px;border-radius:2px;background:rgba(108,99,255,.25);"></div>
+            <div style="width:10px;height:10px;border-radius:2px;background:rgba(108,99,255,.6);"></div>
+            <div style="width:10px;height:10px;border-radius:2px;background:var(--accent);"></div>
+            <span>More</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="c-hdr"><span class="c-title">Subject Breakdown</span></div>
+          <div class="donut-wrap">
+            <div style="position:relative;width:130px;height:130px;flex-shrink:0;"><canvas id="distChart2"></canvas></div>
+            <div class="dist-labels" id="distLabels2"><div style="color:var(--muted);font-size:11.5px;">Log sessions</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- end #page-sessions -->
+
+  <!-- ══ WELLNESS PAGE ══ -->
+  <div class="page" id="page-wellness">
+  <div class="content">
+    <div class="page-title-row">
+      <div><h1>Wellness Centre</h1><p>Your mood patterns, burnout indicators, and mental health signals</p></div>
+      <button class="btn btn-sm" onclick="logMoodManual()">Log Mood Now</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:20px;">
+      <!-- Big wellness score -->
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;text-align:center;">
+        <div class="well-big-ring">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="58" fill="none" stroke="var(--border)" stroke-width="10"/>
+            <circle cx="70" cy="70" r="58" fill="none" stroke="var(--accent)" stroke-width="10" stroke-dasharray="364" id="wellBigRing" stroke-dashoffset="364" stroke-linecap="round"/>
+          </svg>
+          <div class="well-big-ring-center">
+            <div class="mood-score-big" id="wellBigNum">—</div>
+            <div style="font-size:11px;color:var(--muted);">Wellness</div>
+          </div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-top:14px;" id="wellBigLabel">Start logging</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="wellBigSub">Log sessions & mood to unlock your score</div>
+      </div>
+
+      <!-- Mood distribution -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">Mood Distribution</span></div>
+        <div id="moodDist" style="display:flex;flex-direction:column;gap:7px;">
+          <div style="color:var(--muted);font-size:12px;">No mood data yet</div>
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Mood check-ins logged</div>
+          <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;" id="wellTotalMoods">0</div>
+        </div>
+      </div>
+
+      <!-- Burnout signals -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">Burnout Signals</span></div>
+        <div id="burnoutSignals" style="display:flex;flex-direction:column;gap:8px;">
+          <div class="wa wa-p">⚡ Log mood and sessions to detect signals</div>
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Current risk level</div>
+          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;" id="wellRiskBig">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px;">
+      <!-- Mood timeline -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">Mood History</span><span style="font-size:11px;color:var(--muted);">Most recent first</span></div>
+        <div class="mood-timeline" id="moodTimeline">
+          <div style="color:var(--muted);font-size:12px;padding:8px 0;">No mood logs yet. Log your first mood to begin tracking.</div>
+        </div>
+      </div>
+
+      <!-- Mood over time chart -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">Mood Trend Chart</span></div>
+        <canvas id="moodTrendChart" height="200"></canvas>
+        <div class="leg" style="margin-top:10px;">
+          <div class="l-item"><span class="l-dot" style="background:var(--a2)"></span>Mood (1–5)</div>
+          <div class="l-item"><span class="l-dot" style="background:var(--a4)"></span>Burnout zone</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- end #page-wellness -->
+
+  <!-- ══ ANALYTICS PAGE ══ -->
+  <div class="page" id="page-analytics">
+  <div class="content">
+    <div class="page-title-row">
+      <div><h1>Analytics</h1><p>Deep insights into your study patterns and behavioural trends</p></div>
+      <button class="btn btn-sm" onclick="loadDemo()">▶ Load Demo</button>
+    </div>
+
+    <!-- Big KPI row -->
+    <div class="analytics-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px;">
+      <div class="card stat-big-card p" style="border-top:3px solid var(--accent);">
+        <div class="sbc-val" id="an-hours" style="color:var(--accent)">0</div>
+        <div class="sbc-lbl">Total Hours Studied</div>
+        <div class="sbc-trend" id="an-hours-t" style="color:var(--a2)">—</div>
+      </div>
+      <div class="card stat-big-card" style="border-top:3px solid var(--a2);">
+        <div class="sbc-val" id="an-streak" style="color:var(--a2)">0</div>
+        <div class="sbc-lbl">Day Streak</div>
+        <div class="sbc-trend" id="an-streak-t" style="color:var(--a2)">—</div>
+      </div>
+      <div class="card stat-big-card" style="border-top:3px solid var(--a3);">
+        <div class="sbc-val" id="an-focus" style="color:var(--a3)">—</div>
+        <div class="sbc-lbl">Avg Focus Score</div>
+        <div class="sbc-trend" id="an-focus-t" style="color:var(--muted)">—</div>
+      </div>
+      <div class="card stat-big-card" style="border-top:3px solid var(--a4);">
+        <div class="sbc-val" id="an-best" style="color:var(--a4);font-size:28px;padding-top:10px;">—</div>
+        <div class="sbc-lbl">Best Study Day</div>
+        <div class="sbc-trend" id="an-best-t" style="color:var(--muted)">—</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:18px;margin-bottom:18px;">
+      <!-- Full perf chart -->
+      <div class="card">
+        <div class="c-hdr">
+          <span class="c-title">Performance Over Time</span>
+          <div class="tab-row">
+            <button class="tab on" onclick="switchView2('sessions',this)">Duration</button>
+            <button class="tab" onclick="switchView2('mood',this)">Mood</button>
+            <button class="tab" onclick="switchView2('both',this)">Both</button>
+          </div>
+        </div>
+        <canvas id="perfChart2" height="160"></canvas>
+      </div>
+
+      <!-- Weekly bar chart -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">Minutes by Day of Week</span></div>
+        <div class="bar-chart-wrap" id="dayBars"></div>
+        <div style="display:flex;justify-content:space-around;margin-top:4px;">
+          <span style="font-size:9.5px;color:var(--muted);">Mon</span>
+          <span style="font-size:9.5px;color:var(--muted);">Tue</span>
+          <span style="font-size:9.5px;color:var(--muted);">Wed</span>
+          <span style="font-size:9.5px;color:var(--muted);">Thu</span>
+          <span style="font-size:9.5px;color:var(--muted);">Fri</span>
+          <span style="font-size:9.5px;color:var(--muted);">Sat</span>
+          <span style="font-size:9.5px;color:var(--muted);">Sun</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;">
+      <!-- Focus distribution -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">Focus Rating Distribution</span></div>
+        <canvas id="focusDistChart" height="180"></canvas>
+      </div>
+      <!-- Best study times -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">Best Study Hours</span></div>
+        <div id="bestHours" style="display:flex;flex-direction:column;gap:7px;">
+          <div style="color:var(--muted);font-size:12px;">Log sessions to see peak hours</div>
+        </div>
+      </div>
+      <!-- Insights summary -->
+      <div class="card">
+        <div class="c-hdr"><span class="c-title">AI Pattern Summary</span></div>
+        <div id="patternSummary" style="display:flex;flex-direction:column;gap:7px;font-size:12.5px;line-height:1.6;color:var(--text);">
+          <div style="color:var(--muted);">Run AI analysis on the dashboard to generate pattern insights.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- end #page-analytics -->
 <div class="m-ov" id="sessModal">
   <div class="modal">
     <h2>📘 Log Study Session</h2>
@@ -750,6 +1035,11 @@ function saveSession(){
 // ═══════════════════════════════════════
 function refreshUI(){
   updStats(); updProblemBar(); updCharts(); updSessList(); updWellness(); updImpact();
+  // also re-render any active sub-page
+  const ap=document.querySelector('.page.active');
+  if(ap&&ap.id==='page-sessions') renderSessionsPage();
+  if(ap&&ap.id==='page-wellness') renderWellnessPage();
+  if(ap&&ap.id==='page-analytics') renderAnalyticsPage();
 }
 
 function updStats(){
@@ -1137,8 +1427,318 @@ function localAnalysis(p){
 }
 
 // ═══════════════════════════════════════
-// SETTINGS
+// PAGE NAVIGATION
 // ═══════════════════════════════════════
+let perfChart2=null, distChart2=null, moodTrendChart=null, focusDistChart=null;
+let chartView2='sessions';
+
+function navTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-i[id^=nav-]').forEach(n=>n.classList.remove('on'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.getElementById('nav-'+page).classList.add('on');
+  if(page==='sessions') renderSessionsPage();
+  if(page==='wellness') renderWellnessPage();
+  if(page==='analytics') renderAnalyticsPage();
+}
+
+// ═══════════════════════════════════════
+// SESSIONS PAGE
+// ═══════════════════════════════════════
+function renderSessionsPage(){
+  const n=sessions.length;
+  const tot=sessions.reduce((a,b)=>a+b.duration,0);
+  document.getElementById('sp-total').textContent=n;
+  document.getElementById('sp-totalsub').textContent=n?`${(tot/60).toFixed(1)} hrs total`:'—';
+  document.getElementById('sp-hours').textContent=(tot/60).toFixed(1);
+  document.getElementById('sp-hourssub').textContent=n?`~${Math.round(tot/n)} min avg`:'—';
+  const af=n?(sessions.reduce((a,b)=>a+b.focus,0)/n).toFixed(1):'—';
+  document.getElementById('sp-focus').textContent=af;
+  // top subject
+  const subs={};
+  sessions.forEach(s=>subs[s.subject]=(subs[s.subject]||0)+s.duration);
+  const top=Object.entries(subs).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('sp-subject').textContent=top?top[0]:'—';
+  document.getElementById('sp-subjectsub').textContent=top?`${Math.round(top[1]/60*10)/10}h logged`:'—';
+
+  renderFullTable();
+  renderHeatmap();
+  renderDistChart2();
+}
+
+function renderFullTable(){
+  const tbody=document.getElementById('sessFullBody');
+  const search=document.getElementById('sessSearch')?.value.toLowerCase()||'';
+  const sort=document.getElementById('sessSort')?.value||'newest';
+  let list=[...sessions];
+  if(search) list=list.filter(s=>s.subject.toLowerCase().includes(search));
+  if(sort==='newest') list.sort((a,b)=>b.timestamp-a.timestamp);
+  else if(sort==='oldest') list.sort((a,b)=>a.timestamp-b.timestamp);
+  else if(sort==='longest') list.sort((a,b)=>b.duration-a.duration);
+  else if(sort==='focus') list.sort((a,b)=>b.focus-a.focus);
+  const bc=f=>f>=4?'sb-g':f===3?'sb-p':f===2?'sb-a':'sb-r';
+  const bt=f=>f>=4?'High':f===3?'Good':f===2?'Low':'Poor';
+  if(!list.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;">No sessions found</td></tr>';return;}
+  tbody.innerHTML=list.map(s=>`
+    <tr>
+      <td><strong>${s.subject}</strong></td>
+      <td style="color:var(--muted)">${s.date} ${s.time}</td>
+      <td><strong>${s.duration}</strong> min</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div class="focus-bar-wrap"><div class="focus-bar-fill" style="width:${s.focus/5*100}%;background:${s.focus>=4?'var(--a2)':s.focus>=3?'var(--accent)':'var(--a4)'}"></div></div>
+          <span class="sbadge ${bc(s.focus)}">${bt(s.focus)}</span>
+        </div>
+      </td>
+      <td style="color:var(--muted);font-size:11.5px;">${s.notes||'—'}</td>
+    </tr>`).join('');
+}
+
+function renderHeatmap(){
+  const grid=document.getElementById('heatmapGrid');
+  const now=Date.now(), day=86400000;
+  const dayCounts={};
+  sessions.forEach(s=>{dayCounts[s.date]=(dayCounts[s.date]||0)+1;});
+  let html='';
+  for(let i=27;i>=0;i--){
+    const d=new Date(now-day*i);
+    const key=d.toLocaleDateString();
+    const cnt=dayCounts[key]||0;
+    const lvl=cnt===0?0:cnt===1?1:cnt<=2?2:cnt<=3?3:4;
+    const label=`${d.toLocaleDateString('en-GB',{day:'numeric',month:'short'})}: ${cnt} session${cnt!==1?'s':''}`;
+    html+=`<div class="hm-cell hm-${lvl}" title="${label}"></div>`;
+  }
+  grid.innerHTML=html;
+}
+
+function renderDistChart2(){
+  const subs={};
+  sessions.forEach(s=>subs[s.subject]=(subs[s.subject]||0)+s.duration);
+  const keys=Object.keys(subs);
+  const cols=['#6c63ff','#43b89c','#f7a340','#e05c7f','#a78bfa','#60a5fa'];
+  const total=Object.values(subs).reduce((a,b)=>a+b,0)||1;
+  document.getElementById('distLabels2').innerHTML=keys.length
+    ?keys.map((k,i)=>`<div class="dist-row"><div class="dist-color" style="background:${cols[i%cols.length]}"></div><span class="dist-name">${k}</span><span class="dist-pct">${Math.round(subs[k]/total*100)}%</span></div>`).join('')
+    :'<div style="color:var(--muted);font-size:11.5px;">Log sessions</div>';
+  if(!distChart2){
+    const ctx=document.getElementById('distChart2').getContext('2d');
+    distChart2=new Chart(ctx,{type:'doughnut',data:{labels:keys,datasets:[{data:keys.map(k=>subs[k]),backgroundColor:cols,borderWidth:0,hoverOffset:5}]},options:{cutout:'72%',plugins:{legend:{display:false}},responsive:true}});
+  } else {
+    distChart2.data.labels=keys;
+    distChart2.data.datasets[0].data=keys.map(k=>subs[k]);
+    distChart2.update();
+  }
+}
+
+// ═══════════════════════════════════════
+// WELLNESS PAGE
+// ═══════════════════════════════════════
+function renderWellnessPage(){
+  const n=sessions.length;
+  const rm=moods.slice(-10);
+  const am=rm.length?rm.reduce((a,b)=>a+b.mood,0)/rm.length:null;
+  const af=n?sessions.slice(-5).reduce((a,b)=>a+b.focus,0)/Math.min(5,n):null;
+  let score=null;
+  if(am&&af)score=Math.round((am/5*50)+(af/5*50));
+  else if(am)score=Math.round(am/5*100);
+  else if(af)score=Math.round(af/5*100);
+
+  // Big ring
+  document.getElementById('wellBigNum').textContent=score??'—';
+  const br=document.getElementById('wellBigRing');
+  br.style.strokeDashoffset=score?364-(score/100*364):364;
+  br.style.stroke=score>70?'var(--a2)':score>40?'var(--a3)':'var(--a4)';
+  document.getElementById('wellBigLabel').textContent=score>80?'Excellent 🎉':score>60?'Good 👍':score>40?'Moderate ⚠️':score?'Needs Rest 😴':'No data yet';
+  document.getElementById('wellBigSub').textContent=score?`Based on ${moods.length} mood logs & ${n} sessions`:'Log sessions & mood to unlock';
+
+  // Mood distribution
+  const counts={1:0,2:0,3:0,4:0,5:0};
+  moods.forEach(m=>counts[m.mood]++);
+  const total=moods.length||1;
+  const labels={1:'😞 Burnout',2:'😕 Stressed',3:'😐 Neutral',4:'🙂 Good',5:'😄 Energised'};
+  const mcolors={1:'var(--a4)',2:'var(--a3)',3:'var(--muted)',4:'var(--a2)',5:'var(--accent)'};
+  document.getElementById('moodDist').innerHTML=moods.length
+    ?[5,4,3,2,1].map(v=>`
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;">
+        <span style="width:80px;">${labels[v]}</span>
+        <div style="flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden;">
+          <div style="width:${Math.round(counts[v]/total*100)}%;height:7px;background:${mcolors[v]};border-radius:4px;"></div>
+        </div>
+        <span style="color:var(--muted);width:24px;">${counts[v]}</span>
+      </div>`).join('')
+    :'<div style="color:var(--muted);font-size:12px;">No mood data yet</div>';
+
+  document.getElementById('wellTotalMoods').textContent=moods.length;
+
+  // Burnout signals
+  const signals=[];
+  if(am&&am<2.5) signals.push(['wa-r','⚠️ Mood average below 2.5 — burnout likely']);
+  if(am&&am>=2.5&&am<3.5) signals.push(['wa-a','⚠️ Mood is moderate — monitor closely']);
+  if(am&&am>=3.5) signals.push(['wa-g','✅ Mood is healthy — no burnout detected']);
+  const longSess=sessions.filter(s=>s.duration>80);
+  if(longSess.length>2) signals.push(['wa-a',`⚠️ ${longSess.length} sessions over 80 min detected`]);
+  if(af&&af<2.5) signals.push(['wa-r','📉 Focus declining — distractions likely']);
+  if(!signals.length) signals.push(['wa-p','⚡ No burnout signals — keep going!']);
+  document.getElementById('burnoutSignals').innerHTML=signals.map(([c,t])=>`<div class="wa ${c}" style="font-size:12px;">${t}</div>`).join('');
+  document.getElementById('wellRiskBig').textContent=am?(am<2?'🔴 High Risk':am<3.5?'🟡 Moderate':'🟢 Low Risk'):'—';
+
+  // Timeline
+  const tl=document.getElementById('moodTimeline');
+  if(!moods.length){tl.innerHTML='<div style="color:var(--muted);font-size:12px;padding:8px 0;">No mood logs yet.</div>';return;}
+  const mmap={1:{e:'😞',l:'Burnout',c:'var(--a4)'},2:{e:'😕',l:'Stressed',c:'var(--a3)'},3:{e:'😐',l:'Neutral',c:'var(--muted)'},4:{e:'🙂',l:'Good',c:'var(--a2)'},5:{e:'😄',l:'Energised',c:'var(--accent)'}};
+  tl.innerHTML=[...moods].reverse().map(m=>{
+    const mm=mmap[m.mood];
+    const t=new Date(m.timestamp);
+    return `<div class="mood-tl-item">
+      <span class="mood-tl-emoji">${mm.e}</span>
+      <div class="mood-tl-info">
+        <div class="mood-tl-date">${mm.l}</div>
+        <div class="mood-tl-time">${m.date} · ${t.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+      <div class="mood-tl-bar"><div class="mood-tl-fill" style="width:${m.mood/5*100}%;background:${mm.c};height:5px;border-radius:3px;"></div></div>
+    </div>`;
+  }).join('');
+
+  // Mood trend chart
+  if(!moodTrendChart){
+    const ctx=document.getElementById('moodTrendChart').getContext('2d');
+    moodTrendChart=new Chart(ctx,{type:'line',data:{
+      labels:moods.slice(-14).map(m=>m.date),
+      datasets:[
+        {label:'Mood',data:moods.slice(-14).map(m=>m.mood),borderColor:'var(--a2)',backgroundColor:'rgba(67,184,156,.1)',borderWidth:2.5,tension:.4,fill:true,pointRadius:3},
+        {label:'Burnout Zone',data:moods.slice(-14).map(()=>2.5),borderColor:'rgba(224,92,127,.4)',borderWidth:1.5,borderDash:[4,4],pointRadius:0,fill:false}
+      ]},
+      options:{responsive:true,plugins:{legend:{display:false}},
+        scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#8b8faa',maxTicksLimit:7}},y:{min:0,max:5,grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:10},color:'#8b8faa'}}}
+      }
+    });
+  } else {
+    moodTrendChart.data.labels=moods.slice(-14).map(m=>m.date);
+    moodTrendChart.data.datasets[0].data=moods.slice(-14).map(m=>m.mood);
+    moodTrendChart.data.datasets[1].data=moods.slice(-14).map(()=>2.5);
+    moodTrendChart.update();
+  }
+}
+
+// ═══════════════════════════════════════
+// ANALYTICS PAGE
+// ═══════════════════════════════════════
+function renderAnalyticsPage(){
+  const n=sessions.length;
+  const tot=sessions.reduce((a,b)=>a+b.duration,0);
+  document.getElementById('an-hours').textContent=(tot/60).toFixed(1);
+  document.getElementById('an-hours-t').textContent=n?`Across ${n} sessions`:'—';
+
+  // Streak
+  const last30=[...Array(30)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-i);return d.toLocaleDateString();});
+  const adays=new Set(sessions.map(s=>s.date));
+  let streak=0;
+  for(const d of last30){if(adays.has(d))streak++;else break;}
+  document.getElementById('an-streak').textContent=streak;
+  document.getElementById('an-streak-t').textContent=streak>0?`${streak} day${streak>1?'s':''} in a row`:'No current streak';
+
+  // Avg focus
+  const af=n?(sessions.reduce((a,b)=>a+b.focus,0)/n).toFixed(1):'—';
+  document.getElementById('an-focus').textContent=af!=='—'?af+'/5':af;
+  document.getElementById('an-focus-t').textContent=af!=='—'?(parseFloat(af)>=4?'🔥 Excellent':parseFloat(af)>=3?'👍 Good':'Needs work'):'—';
+
+  // Best day
+  const dayTots={};
+  sessions.forEach(s=>dayTots[s.date]=(dayTots[s.date]||0)+s.duration);
+  const best=Object.entries(dayTots).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('an-best').textContent=best?Math.round(best[1])+'m':'—';
+  document.getElementById('an-best-t').textContent=best?best[0]:'—';
+
+  // Performance chart2
+  if(!perfChart2){
+    const ctx=document.getElementById('perfChart2').getContext('2d');
+    perfChart2=new Chart(ctx,{type:'line',data:{labels:[],datasets:[
+      {label:'Duration',data:[],borderColor:'#6c63ff',backgroundColor:'rgba(108,99,255,.07)',borderWidth:2.5,tension:.4,fill:true,pointRadius:3,pointBackgroundColor:'#6c63ff',yAxisID:'y'},
+      {label:'Mood',data:[],borderColor:'#43b89c',borderWidth:2,tension:.4,fill:false,pointRadius:3,pointBackgroundColor:'#43b89c',yAxisID:'y2',borderDash:[5,3]}
+    ]},options:{responsive:true,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#8b8faa',maxTicksLimit:8}},
+        y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:10},color:'#8b8faa'},beginAtZero:true},
+        y2:{position:'right',grid:{display:false},min:0,max:5,display:false}
+      }}
+    });
+  }
+  const l12=sessions.slice(-12);
+  perfChart2.data.labels=l12.map(s=>s.time);
+  perfChart2.data.datasets[0].data=l12.map(s=>s.duration);
+  perfChart2.data.datasets[0].hidden=chartView2==='mood';
+  perfChart2.data.datasets[1].data=l12.map(s=>{
+    const near=moods.reduce((a,b)=>Math.abs(b.timestamp-s.timestamp)<Math.abs((a?.timestamp||Infinity)-s.timestamp)?b:a,null);
+    return near?.mood||null;
+  });
+  perfChart2.data.datasets[1].hidden=chartView2==='sessions';
+  perfChart2.update();
+
+  // Day of week bars
+  const dayMins={Mon:0,Tue:0,Wed:0,Thu:0,Fri:0,Sat:0,Sun:0};
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  sessions.forEach(s=>{
+    const d=new Date(s.timestamp);
+    const dn=dayNames[d.getDay()];
+    if(dayMins[dn]!==undefined) dayMins[dn]+=s.duration;
+  });
+  const dayArr=Object.values(dayMins);
+  const maxDay=Math.max(...dayArr,1);
+  document.getElementById('dayBars').innerHTML=Object.keys(dayMins).map((d,i)=>`
+    <div class="bar-col">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:2px;">${dayArr[i]?dayArr[i]+'m':''}</div>
+      <div class="bar-fill" style="height:${Math.round(dayArr[i]/maxDay*110)}px;background:${dayArr[i]===maxDay?'var(--a2)':'var(--accent)'};opacity:${0.4+dayArr[i]/maxDay*0.6}"></div>
+    </div>`).join('');
+
+  // Focus distribution chart
+  const focusCounts=[0,0,0,0,0];
+  sessions.forEach(s=>focusCounts[s.focus-1]=(focusCounts[s.focus-1]||0)+1);
+  if(!focusDistChart){
+    const ctx=document.getElementById('focusDistChart').getContext('2d');
+    focusDistChart=new Chart(ctx,{type:'bar',data:{
+      labels:['⭐','⭐⭐','⭐⭐⭐','⭐⭐⭐⭐','⭐⭐⭐⭐⭐'],
+      datasets:[{data:focusCounts,backgroundColor:['#e05c7f','#f7a340','#8b8faa','#43b89c','#6c63ff'],borderRadius:6,borderWidth:0}]
+    },options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{size:10},stepSize:1},beginAtZero:true}}}});
+  } else {
+    focusDistChart.data.datasets[0].data=focusCounts;
+    focusDistChart.update();
+  }
+
+  // Best hours
+  const hourCounts={};
+  sessions.forEach(s=>{const h=s.time?parseInt(s.time.split(':')[0]):null;if(h!==null)hourCounts[h]=(hourCounts[h]||0)+s.duration;});
+  const topHours=Object.entries(hourCounts).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  document.getElementById('bestHours').innerHTML=topHours.length
+    ?topHours.map(([h,m])=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--chip);border-radius:8px;font-size:12px;">
+        <span>🕐 ${h}:00 – ${parseInt(h)+1}:00</span>
+        <strong>${Math.round(m)} min</strong>
+      </div>`).join('')
+    :'<div style="color:var(--muted);font-size:12px;">Log sessions to see peak hours</div>';
+
+  // Pattern summary
+  const avgDur=n?Math.round(tot/n):0;
+  const patterns=[];
+  if(n>0) patterns.push(`📊 You've studied <strong>${(tot/60).toFixed(1)} hrs</strong> across <strong>${n} sessions</strong>.`);
+  if(avgDur>60) patterns.push(`⏱️ Sessions average <strong>${avgDur} min</strong> — consider shorter blocks for better retention.`);
+  else if(avgDur>0) patterns.push(`⏱️ Average session: <strong>${avgDur} min</strong> — good focus window.`);
+  if(topHours.length) patterns.push(`🕐 Peak study hour: <strong>${topHours[0][0]}:00</strong> — schedule hard topics here.`);
+  if(streak>3) patterns.push(`🔥 <strong>${streak}-day streak!</strong> Consistency is your superpower.`);
+  document.getElementById('patternSummary').innerHTML=patterns.length
+    ?patterns.map(p=>`<div style="padding:5px 0;border-bottom:1px solid var(--border);">${p}</div>`).join('')
+    :'<div style="color:var(--muted);">Run AI analysis on the dashboard to generate pattern insights.</div>';
+}
+
+function switchView2(v,el){
+  chartView2=v;
+  document.querySelectorAll('#page-analytics .tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  if(perfChart2){
+    perfChart2.data.datasets[0].hidden=v==='mood';
+    perfChart2.data.datasets[1].hidden=v==='sessions';
+    perfChart2.update();
+  }
+}
 function openSettings(){document.getElementById('settModal').classList.add('open');}
 function closeSettings(){applySettings();document.getElementById('settModal').classList.remove('open');}
 function toggleDark(){
