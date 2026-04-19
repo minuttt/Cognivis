@@ -751,7 +751,7 @@ body.dark .chain-personality{color:#6b6f8a;}
             <div class="mood-btn" onclick="selMood(4,this)"><span class="m-emoji">🙂</span><span class="m-lbl">Good</span></div>
             <div class="mood-btn" onclick="selMood(5,this)"><span class="m-emoji">😄</span><span class="m-lbl">Peak</span></div>
           </div>
-          <button class="log-btn" onclick="logMoodManual()">Log Mood → AI Analysis</button>
+          <button class="log-btn" onclick="logMoodManual()">Log Mood → Cognivis Analysis</button>
           <div class="timer-bar"><span class="timer-lbl"><span class="pulse-dot"></span>Next auto check-in</span><span class="timer-val" id="timerDisp">5:00</span></div>
           <div id="moodHint" style="margin-top:7px;font-size:12.5px;color:var(--muted);line-height:1.5;min-height:16px;"></div>
         </div>
@@ -784,12 +784,12 @@ body.dark .chain-personality{color:#6b6f8a;}
       <div class="ai-decision-banner" id="aiBanner">
         <div class="adb-label">🧠 Today's AI Decision</div>
         <div class="adb-priority-tag adb-priority-med" id="adbPriority">📊 Medium Priority</div>
-        <div class="adb-decision" id="adbDecision">Log data to activate MindTrack AI</div>
+        <div class="adb-decision" id="adbDecision">Log data to activate Cognivis</div>
         <div class="adb-meta">
           <span class="adb-risk-badge adb-risk-med" id="adbRisk">No data</span>
           <span class="adb-timestamp" id="adbTime">—</span>
         </div>
-        <div class="adb-adaptive-note">This recommendation adapts as your study behaviour changes. The more you log, the smarter it gets.</div>
+        <div class="adb-adaptive-note">This recommendation adapts as your study behaviour changes. The more you log, the smarter Cognivis gets.</div>
       </div>
       <!-- SUBHEADER -->
       <div class="aac-hdr">
@@ -797,7 +797,7 @@ body.dark .chain-personality{color:#6b6f8a;}
           <div class="aac-orb">🧠</div>
           <div>
             <div class="aac-title">AI Action Center</div>
-            <div class="aac-sub" id="aacSub">MindTrack AI is ready — log a session or mood to activate</div>
+            <div class="aac-sub" id="aacSub">Cognivis is ready — log a session or mood to activate</div>
           </div>
         </div>
         <div class="aac-status">
@@ -817,7 +817,7 @@ body.dark .chain-personality{color:#6b6f8a;}
         <div class="aac-xai">
           <div class="aac-section-lbl">🔍 Why this recommendation?</div>
           <div class="xai-factors" id="xaiFactors">
-            <div style="color:var(--muted);font-size:12px;padding:8px 0;">Run AI analysis to see reasoning.</div>
+            <div style="color:var(--muted);font-size:12px;padding:8px 0;">Run Cognivis analysis to see reasoning.</div>
           </div>
           <div class="pred-box p-a" id="predBox" style="display:none;"></div>
         </div>
@@ -825,7 +825,7 @@ body.dark .chain-personality{color:#6b6f8a;}
         <div class="aac-sim">
           <div class="aac-section-lbl">🔮 Tomorrow Simulation</div>
           <div id="simContainer">
-            <div style="color:var(--muted);font-size:12px;padding:8px 0;">Run AI analysis to simulate outcomes.</div>
+            <div style="color:var(--muted);font-size:12px;padding:8px 0;">Run Cognivis analysis to simulate outcomes.</div>
           </div>
         </div>
       </div>
@@ -855,7 +855,7 @@ body.dark .chain-personality{color:#6b6f8a;}
           <div class="imp-stat"><span class="imp-lbl">Focus Consistency</span><div><span class="imp-val" id="impFoc">—</span><span class="imp-chg" id="impFocChg" style="display:none"></span></div></div>
           <div class="imp-stat"><span class="imp-lbl">Mood Trend</span><div><span class="imp-val" id="impMood">—</span><span class="imp-chg" id="impMoodChg" style="display:none"></span></div></div>
           <div class="imp-stat"><span class="imp-lbl">Burnout Risk</span><span class="imp-val" id="impBurnout">—</span></div>
-          <div class="imp-stat"><span class="imp-lbl">AI Adaptations</span><span class="imp-val" id="impAdapt">0</span></div>
+          <div class="imp-stat"><span class="imp-lbl">Cognivis Adaptations</span><span class="imp-val" id="impAdapt">0</span></div>
         </div>
         <div class="card">
           <div class="c-hdr" style="margin-bottom:8px;"><span class="c-title">Wellness Score</span></div>
@@ -1103,7 +1103,7 @@ body.dark .chain-personality{color:#6b6f8a;}
       <div class="card">
         <div class="c-hdr"><span class="c-title">AI Pattern Summary</span></div>
         <div id="patternSummary" style="display:flex;flex-direction:column;gap:7px;font-size:12.5px;line-height:1.6;color:var(--text);">
-          <div style="color:var(--muted);">Run AI analysis on the dashboard to generate pattern insights.</div>
+          <div style="color:var(--muted);">Run Cognivis analysis on the dashboard to generate pattern insights.</div>
         </div>
       </div>
     </div>
@@ -1113,7 +1113,7 @@ body.dark .chain-personality{color:#6b6f8a;}
 <!-- SETTINGS MODAL -->
 <div class="m-ov" id="settModal">
   <div class="modal">
-    <h2>⚙️ Settings</h2><p>Customise your MindTrack AI experience.</p>
+    <h2>⚙️ Settings</h2><p>Customise your Cognivis AI experience.</p>
     <div class="set-row"><div><div class="set-lbl">🌗 Appearance</div><div class="set-sub">Switch between Light and Dark mode</div></div><div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);"><span id="dmLbl">Light</span><label class="toggle"><input type="checkbox" id="setDark" onchange="toggleDark()"><span class="toggle-s"></span></label><span>Dark</span></div></div>
     <div class="set-row"><div><div class="set-lbl">Mood Check-in Interval</div><div class="set-sub">How often to show mood popup</div></div><select id="setInt" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans';font-size:13px;" onchange="applySettings()"><option value="1">1 min</option><option value="2">2 min</option><option value="5" selected>5 min</option><option value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option></select></div>
     <div class="set-row"><div><div class="set-lbl">Auto AI after each log</div><div class="set-sub">Re-run analysis on every update</div></div><label class="toggle"><input type="checkbox" id="setAutoAI" checked><span class="toggle-s"></span></label></div>
@@ -1134,7 +1134,7 @@ body.dark .chain-personality{color:#6b6f8a;}
     <div class="pop-m" onclick="popSel(4,this)"><span>🙂</span></div>
     <div class="pop-m" onclick="popSel(5,this)"><span>😄</span></div>
   </div>
-  <button class="pop-sub" onclick="submitPopMood()">Submit → Update AI</button>
+  <button class="pop-sub" onclick="submitPopMood()">Submit → Update Cognivis</button>
 </div>
 
 <script>
@@ -1555,7 +1555,7 @@ async function runAI(){
   const sub=document.getElementById('aacSub');
   const center=document.getElementById('aiActionCenter');
   spin.style.display='inline-block';
-  sub.textContent='Claude is analysing your behavioural patterns…';
+  sub.textContent='Cognivis is analysing your behavioural patterns…';
 
   const n=sessions.length;
   const tot=sessions.reduce((a,b)=>a+b.duration,0);
@@ -1577,7 +1577,7 @@ async function runAI(){
     recentSessions:sessions.slice(-5).map(s=>({subject:s.subject,duration:s.duration,focus:s.focus,notes:s.notes,time:s.time}))
   };
 
-  const SYSTEM=`You are MindTrack AI — a decisive, warm student wellness coach. You make CLEAR DECISIONS, not suggestions.
+  const SYSTEM=`You are Cognivis — a decisive, warm student wellness coach. You make CLEAR DECISIONS, not suggestions.
 
 Return ONLY valid JSON (no markdown, no backticks, no preamble):
 {
